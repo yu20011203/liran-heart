@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>浪漫至死不渝 · 李然</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9D%A4%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<style>
+  :root {
+    --pink: #ea80b0;
+    --pink-soft: rgba(234, 128, 176, .7);
+    --bg: #000;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    height: 100%;
+  }
+
+  body {
+    margin: 0;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+    background: var(--bg);
+    font-family: 'Dosis', 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* 爱心中间淡淡的柔光 */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background: radial-gradient(circle at 50% 47%, rgba(234, 128, 176, .09), rgba(234, 128, 176, .02) 26%, transparent 44%);
+    pointer-events: none;
+  }
+
+  #ui {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    transform-origin: 50% 50%;
+  }
+
+  #ui .love {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -225px 0 0 -225px;
+    will-change: transform;
+  }
+
+  #ui .love_horizontal {
+    animation: horizontal 10000ms infinite alternate ease-in-out;
+    animation-delay: var(--delay);
+  }
+
+  #ui .love_vertical {
+    animation: vertical 20000ms infinite linear;
+    animation-delay: var(--delay);
+  }
+
+  #ui .love_word {
+    color: var(--pink);
+    font-size: 1.6rem;
+    transform: translate(-50%, -100%) rotateZ(-30deg);
+    font-family: 'Dosis', 'Segoe UI', sans-serif;
+    letter-spacing: 2px;
+    white-space: nowrap;
+    opacity: .92;
+    text-shadow: 0 0 10px rgba(234, 128, 176, .14);
+  }
+
+  @keyframes horizontal {
+    from { transform: translateX(0px); }
+    to   { transform: translateX(450px); }
+  }
+
+  @keyframes vertical {
+    0%      { transform: translateY(180px); }
+    10%     { transform: translateY(45px); }
+    15%     { transform: translateY(4.5px); }
+    18%     { transform: translateY(0px); }
+    20%     { transform: translateY(4.5px); }
+    22%     { transform: translateY(34.61538px); }
+    24%     { transform: translateY(64.28571px); }
+    25%     { transform: translateY(112.5px); }
+    26%     { transform: translateY(64.28571px); }
+    28%     { transform: translateY(34.61538px); }
+    30%     { transform: translateY(4.5px); }
+    32%     { transform: translateY(0px); }
+    35%     { transform: translateY(4.5px); }
+    40%     { transform: translateY(45px); }
+    50%     { transform: translateY(180px); }
+    71%     { transform: translateY(428.57143px); }
+    72.5%   { transform: translateY(441.17647px); }
+    75%     { transform: translateY(450px); }
+    77.5%   { transform: translateY(441.17647px); }
+    79%     { transform: translateY(428.57143px); }
+    100%    { transform: translateY(180px); }
+  }
+
+  /* 爱心中间的名字 */
+  .name-wrap {
+    position: fixed;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+
+  .name {
+    margin: -2vh 0 0;
+    font-family: 'STKaiti', 'KaiTi', 'Kaiti SC', 'Noto Serif SC', 'Songti SC', serif;
+    font-size: clamp(42px, 9vmin, 78px);
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: .08em;
+    margin-right: -.08em;
+    color: #fff;
+    text-shadow:
+      0 0 12px rgba(255, 255, 255, .55),
+      0 0 34px rgba(234, 128, 176, .8),
+      0 0 72px rgba(234, 128, 176, .45);
+    animation: nameBreath 3.6s ease-in-out infinite;
+  }
+
+  @keyframes nameBreath {
+    0%, 100% { transform: scale(1); opacity: .96; }
+    50%      { transform: scale(1.045); opacity: 1; }
+  }
+
+  /* 开场信封 */
+  #splash {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    cursor: pointer;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity .75s ease, visibility .75s ease;
+    user-select: none;
+  }
+
+  #splash.hide {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .letter {
+    width: clamp(150px, 22vw, 200px);
+    border-radius: 4px;
+    animation: letterBeat 1.25s ease-in-out infinite;
+  }
+
+  .letter img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    box-shadow: 0 0 10px #999;
+  }
+
+  #splash p {
+    margin: 18px 0 0;
+    font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+    font-size: clamp(20px, 2.2vw, 26px);
+    letter-spacing: .06em;
+    color: #111;
+    animation: hintPulse 1.25s ease-in-out infinite;
+  }
+
+  @keyframes letterBeat {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.06); }
+  }
+
+  @keyframes hintPulse {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.08); }
+  }
+
+  /* 小屏时整体缩小爱心，保证完整显示 */
+  @media (max-width: 560px), (max-height: 560px) {
+    #ui { transform: scale(.82); }
+  }
+  @media (max-width: 430px), (max-height: 430px) {
+    #ui { transform: scale(.47); }
+  }
+  @media (max-width: 340px) {
+    #ui { transform: scale(.42); }
+  }
+</style>
+</head>
+<body>
+
+  <div id="splash" role="button" tabindex="0" aria-label="点击开启">
+    <div class="letter">
+      <img src="data:image/jpeg;base64,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" alt="打开信封">
+    </div>
+    <p>☝🏻戳这里☝🏽</p>
+  </div>
+
+  <div id="ui" aria-hidden="true"></div>
+
+  <div class="name-wrap">
+    <h1 class="name">李然</h1>
+  </div>
+
+  <script>
+    const words = [
+      "I love you",
+      "je  t'aime",
+      "ich liebe dich",
+      "σεαγαπώseagapo",
+      "szertlek",
+      "taim i'ngra leat",
+      "mina armadtansind",
+      "mina rakastan sinua",
+      "ik zie u graag",
+      "Ti Amo",
+      "te amo vos amo",
+      "estevi milu",
+      "ik hou van jou",
+      "jeg elsker dig",
+      "eu amo-te",
+      "lingo  gramo",
+      "tave  myliu",
+      "te  sakam",
+      "men seni sevirem",
+      "vivian",
+      "kocham  cie",
+      "te tu be besc",
+      "ene ewwdechaly",
+      "milujite",
+      "khoi  huk  chau",
+      "volim  te",
+      "chit pade",
+      "wise cas",
+      "bong salang oun",
+      "ninakupenda",
+      "saja kasih savdari",
+      "爱 し て る",
+      "사  랑  해",
+      "أُحِبُّكَ uħib:ukato",
+      "inhobbok",
+      "saya citamu",
+      "ma timilai maya",
+      "tora dost daram",
+      "jag älskar dig",
+      "seni seviyorum",
+      "eg elska tigi",
+      "em ye'u anh",
+      "te quiero",
+      "anh ye'u em",
+      "ic lufie þe",
+      "te amo",
+      "an unnaik",
+      "mahal  kita",
+      "jag iskar dig",
+      "kiahoahai",
+      "Men seni sevaman",
+      "ndza ku rhandza",
+      "dw i'n dy garu di",
+      "dji t'veû vol'tî",
+      "ke a o rata",
+      "waan ku jecelahay",
+      "Ou te alofa ia te oe",
+      "Ég elska þig",
+      "ta graih aym ort",
+      "Ah loove ye",
+      "ngiyakuthanda",
+      "Mi amas vin",
+      "rwyndy garu di",
+      "na gligivaget",
+      "ahs te obicham",
+      "我 爱 你",
+      "我 爱 你"
+    ];
+
+    const ui = document.getElementById('ui');
+    const fragment = document.createDocumentFragment();
+
+    words.forEach((word, index) => {
+      const love = document.createElement('div');
+      love.className = 'love';
+      love.style.setProperty('--delay', `${-(index + 1) * 300}ms`);
+
+      const horizontal = document.createElement('div');
+      horizontal.className = 'love_horizontal';
+      const vertical = document.createElement('div');
+      vertical.className = 'love_vertical';
+      const text = document.createElement('div');
+      text.className = 'love_word';
+      text.textContent = word;
+
+      vertical.appendChild(text);
+      horizontal.appendChild(vertical);
+      love.appendChild(horizontal);
+      fragment.appendChild(love);
+    });
+
+    ui.appendChild(fragment);
+
+    const splash = document.getElementById('splash');
+
+    function openPage() {
+      splash.classList.add('hide');
+      document.body.classList.add('opened');
+    }
+
+    splash.addEventListener('click', openPage);
+    splash.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        openPage();
+      }
+    });
+
+    // 方便直接预览爱心效果
+    if (location.hash === '#heart') {
+      openPage();
+    }
+  </script>
+</body>
+</html>
